@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D4A3EE752EAFA6D40021198D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D4A3EE742EAFA6D40021198D /* SnapKit */; };
+		D4A3EE782EAFA6E10021198D /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = D4A3EE772EAFA6E10021198D /* PinLayout */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D47356952EAFA25400DB8F47 /* Orbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -14,7 +19,7 @@
 		D47356AA2EAFA25500DB8F47 /* Exceptions for "Orbit" folder in "Orbit" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				ApplicationLayer/Info.plist,
 			);
 			target = D47356942EAFA25400DB8F47 /* Orbit */;
 		};
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A3EE782EAFA6E10021198D /* PinLayout in Frameworks */,
+				D4A3EE752EAFA6D40021198D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = Orbit;
 			packageProductDependencies = (
+				D4A3EE742EAFA6D40021198D /* SnapKit */,
+				D4A3EE772EAFA6E10021198D /* PinLayout */,
 			);
 			productName = Orbit;
 			productReference = D47356952EAFA25400DB8F47 /* Orbit.app */;
@@ -107,6 +116,10 @@
 			);
 			mainGroup = D473568C2EAFA25400DB8F47;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D4A3EE732EAFA6D40021198D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				D4A3EE762EAFA6E10021198D /* XCRemoteSwiftPackageReference "PinLayout" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D47356962EAFA25400DB8F47 /* Products */;
 			projectDirPath = "";
@@ -147,10 +160,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PZFHJR9YRZ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Orbit/Info.plist;
+				INFOPLIST_FILE = Orbit/ApplicationLayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -179,10 +191,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PZFHJR9YRZ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Orbit/Info.plist;
+				INFOPLIST_FILE = Orbit/ApplicationLayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -345,6 +356,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D4A3EE732EAFA6D40021198D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		D4A3EE762EAFA6E10021198D /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D4A3EE742EAFA6D40021198D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4A3EE732EAFA6D40021198D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		D4A3EE772EAFA6E10021198D /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4A3EE762EAFA6E10021198D /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D473568D2EAFA25400DB8F47 /* Project object */;
 }
