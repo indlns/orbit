@@ -59,10 +59,10 @@ class ReminderCell: UITableViewCell {
     
     // MARK: - Configure Cell
     
-    public func configure(model: RemindersModel) {
-        setupCompletedToDo(completed: model.isDone, text: model.title)
+    public func configure(model: Reminders) {
+        setupCompletedToDo(completed: model.isDone, text: model.title ?? "")
         descriptionLabel.text = model.desc
-        dateLabel.text = model.endDate
+        dateLabel.text = model.date ?? "9999"
     }
     
     // MARK: - Setup

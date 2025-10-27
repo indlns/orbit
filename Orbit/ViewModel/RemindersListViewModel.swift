@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CoreData
 
 class RemindersListViewModel: NSObject {
     
     private var coreDataService: CoreDataService!
     
-    private(set) var remindersModel: [RemindersModel]? {
+    private(set) var remindersModel: [Reminders]? {
         didSet {
             self.bindViewModelToView()
         }
@@ -22,13 +23,23 @@ class RemindersListViewModel: NSObject {
     override init() {
         super.init()
         self.coreDataService = CoreDataService()
-        getRemiders()
+        fetchRemiders()
     }
     
     // MARK: Setup
     
-    func getRemiders() {
-        let reminders = ReminderFactory.create()
-        self.remindersModel = reminders
+    func fetchRemiders() {
+        let context = CoreDataService.shared.context
+        let request: NSFetchRequest<Reminders> = Reminders.fetchRequest()
+        do {
+            remindersModel = try context.fetch(request)
+        } catch {
+            print("Ошибка загрузки: \(error)")
+        }
+    }
+    
+    func saveRemidner(title: String, desc: String, date: String) {
+        coreDataService.saveReminder(title: title, desc: desc, date: date)
+        fetchRemiders()
     }
 }
