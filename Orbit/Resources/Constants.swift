@@ -11,4 +11,8 @@ struct Constants {
     enum ReminderCell {
         static let identifier = "ReminderCell"
     }
+    
+    enum DateFormat {
+        static let reminderDateFormat = "dd.MM.yyyy"
+    }
 }

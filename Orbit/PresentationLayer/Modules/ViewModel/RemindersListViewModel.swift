@@ -29,7 +29,7 @@ class RemindersListViewModel: NSObject {
     // MARK: Setup
     
     func fetchRemiders() {
-        let context = CoreDataService.shared.context
+        let context = coreDataService.context
         let request: NSFetchRequest<Reminders> = Reminders.fetchRequest()
         do {
             remindersModel = try context.fetch(request)
@@ -38,8 +38,13 @@ class RemindersListViewModel: NSObject {
         }
     }
     
-    func saveRemidner(title: String, desc: String, date: String) {
+    func saveRemidner(title: String, desc: String, date: Date) {
         coreDataService.saveReminder(title: title, desc: desc, date: date)
+        fetchRemiders()
+    }
+    
+    func deleteReminder(reminder: Reminders) {
+        coreDataService.deleteReminder(reminder: reminder)
         fetchRemiders()
     }
 }

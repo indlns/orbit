@@ -8,9 +8,7 @@
 import Foundation
 import CoreData
 
-class CoreDataService {
-    static let shared = CoreDataService()
-    
+class CoreDataService {    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Orbit")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -37,11 +35,13 @@ class CoreDataService {
         }
     }
     
-    func saveReminder(title: String, desc: String, date: String) {
+    // MARK: - Actions
+    
+    func saveReminder(title: String, desc: String, date: Date) {
         let reminder = Reminders(context: context)
         reminder.title = title
         reminder.desc = desc
-        reminder.date = ""
+        reminder.date = date
         saveContext()
     }
     

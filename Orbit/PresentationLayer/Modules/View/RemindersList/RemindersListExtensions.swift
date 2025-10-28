@@ -27,4 +27,23 @@ extension RemindersListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completion in
+            guard let self = self, let reminder = self.remindersListViewModel.remindersModel?[indexPath.row] else { return }
+            
+            remindersListViewModel.deleteReminder(reminder: reminder)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            completion(true)
+        }
+        
+        deleteAction.backgroundColor = .red
+        deleteAction.image = UIImage(systemName: "trash")
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
+    }
 }
