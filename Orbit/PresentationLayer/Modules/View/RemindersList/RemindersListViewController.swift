@@ -19,7 +19,7 @@ class RemindersListViewController: UITableViewController {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()
-        callToViewModelForUIUpdate()
+        setupBindings()
     }
     
     // MARK: Setup
@@ -38,21 +38,21 @@ class RemindersListViewController: UITableViewController {
     // MARK: Actions
     
     @objc private func searchAction() {
-        print("tap tap")
+        AlertManager.makeNewReminderAlert(on: self) { title, desc, date in
+            self.remindersListViewModel.saveRemidner(title: title,
+                                                     desc: desc,
+                                                     date: date)
+        }
     }
     
-    func callToViewModelForUIUpdate() {
-            self.remindersListViewModel = RemindersListViewModel()
-            self.remindersListViewModel.bindViewModelToView = {
-                self.updateDataSource()
-            }
-        }
-        
-        func updateDataSource() {
+    // MARK: SetupBindings
+    
+    func setupBindings() {
+        self.remindersListViewModel = RemindersListViewModel()
+        self.remindersListViewModel.bindViewModelToView = {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
-    
-    // MARK: Layout
+    }
 }

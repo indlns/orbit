@@ -59,10 +59,10 @@ class ReminderCell: UITableViewCell {
     
     // MARK: - Configure Cell
     
-    public func configure(model: RemindersModel) {
-        setupCompletedToDo(completed: model.isDone, text: model.title)
+    public func configure(model: Reminders) {
+        setupCompletedReminder(completed: model.isDone, text: model.title ?? "")
         descriptionLabel.text = model.desc
-        dateLabel.text = model.endDate
+        dateLabel.text = DateFormatHelper.getString(from: model.date ?? .now)
     }
     
     // MARK: - Setup
@@ -72,7 +72,7 @@ class ReminderCell: UITableViewCell {
         completedImage.clipsToBounds = true
     }
     
-    private func setupCompletedToDo(completed: Bool, text: String) {
+    private func setupCompletedReminder(completed: Bool, text: String) {
         if completed {
             titleLabel.attributedText = NSAttributedString(
                 string: text,
