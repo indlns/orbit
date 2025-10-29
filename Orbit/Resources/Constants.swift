@@ -8,11 +8,13 @@
 import Foundation
 
 struct Constants {
-    enum ReminderCell {
-        static let identifier = "ReminderCell"
+    enum Cell {
+        static let reminderCellIdentifier = "ReminderCell"
+        static let archiveReminderCellIdentifier = "ArchiveReminderCell"
     }
     
     enum DateFormat {
         static let reminderDateFormat = "dd.MM.yyyy"
+        static let reminderDateFormatHours = "HH:mm"
     }
 }

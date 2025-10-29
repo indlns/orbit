@@ -13,7 +13,7 @@ class ReminderCell: UITableViewCell {
     // MARK: - UI
     
     private lazy var titleLabel: UILabel = UILabel().apply {
-        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.font = .systemFont(ofSize: 16, weight: .bold)
         $0.numberOfLines = 0
         $0.sizeToFit()
     }
@@ -24,18 +24,28 @@ class ReminderCell: UITableViewCell {
         $0.sizeToFit()
     }
     
-    private lazy var dateLabel: UILabel = UILabel().apply {
+    private lazy var createdDateLabel: UILabel = UILabel().apply {
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.layer.opacity = 0.5
+        $0.sizeToFit()
+    }
+    
+    private lazy var endDateLabel: UILabel = UILabel().apply {
         $0.font = .systemFont(ofSize: 12, weight: .regular)
         $0.layer.opacity = 0.5
         $0.sizeToFit()
     }
     
     private lazy var completedImage: UIImageView = UIImageView().apply {
-        $0.image = UIImage(named: "completed")
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.contentMode = .scaleToFill
+        $0.isUserInteractionEnabled = true
+        $0.clipsToBounds = true
     }
+    
+    var makeCompleted: ((Reminders) -> Void)?
+    var reminderModel: Reminders!
     
     // MARK: - Life Cycle
     
@@ -54,38 +64,32 @@ class ReminderCell: UITableViewCell {
         [titleLabel,
          completedImage,
          descriptionLabel,
-         dateLabel].forEach({ contentView.addSubview($0) })
+         createdDateLabel,
+         endDateLabel].forEach({ contentView.addSubview($0) })
     }
     
     // MARK: - Configure Cell
     
     public func configure(model: Reminders) {
-        setupCompletedReminder(completed: model.isDone, text: model.title ?? "")
+        self.reminderModel = model
+        titleLabel.text = model.title
         descriptionLabel.text = model.desc
-        dateLabel.text = DateFormatHelper.getString(from: model.date ?? .now)
+        createdDateLabel.text = "Создано: " + DateFormatHelper.getString(from: model.createdDate ?? .now) + " в \(DateFormatHelper.getTimeString(from: model.createdDate ?? .now))"
+        endDateLabel.text = "Завершение: " + DateFormatHelper.getString(from: model.endDate ?? .now)
     }
     
     // MARK: - Setup
     
     private func setupViews() {
         completedImage.layer.cornerRadius = completedImage.frame.size.width / 2
-        completedImage.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(makeComplete))
+        completedImage.addGestureRecognizer(tapGesture)
     }
     
-    private func setupCompletedReminder(completed: Bool, text: String) {
-        if completed {
-            titleLabel.attributedText = NSAttributedString(
-                string: text,
-                attributes: [
-                    .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                    .foregroundColor: UIColor.gray
-                ]
-            )
-        } else {
-            titleLabel.attributedText = NSAttributedString(string: text)
-        }
-        completedImage.image = completed == true ? UIImage(named: "completed") : UIImage(systemName: "cirle")
-        completedImage.layer.borderColor = completed == true ? UIColor.yellow.cgColor : UIColor.gray.cgColor
+    // MARK: - Actions
+    
+    @objc private func makeComplete() {
+        makeCompleted?(reminderModel)
     }
     
     // MARK: - Layout
@@ -109,10 +113,17 @@ class ReminderCell: UITableViewCell {
             .right(20)
         
         descriptionLabel.sizeToFit()
-        dateLabel.pin
+        createdDateLabel.pin
             .top(to: descriptionLabel.edge.bottom).margin(6)
             .left(to: completedImage.edge.right).margin(8)
             .right(20)
-            .bottom(12)
+            .height(20)
+        
+        endDateLabel.sizeToFit()
+        endDateLabel.pin
+            .top(to: createdDateLabel.edge.bottom).margin(6)
+            .left(to: completedImage.edge.right).margin(8)
+            .right(20)
+            .bottom(5)
     }
 }

@@ -21,4 +21,10 @@ final class DateFormatHelper {
     static func getDate(from dateString: String) -> Date {
         dateFormatter.date(from: dateString) ?? Date()
     }
+    
+    static func getTimeString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = Constants.DateFormat.reminderDateFormatHours
+        return formatter.string(from: date)
+    }
 }

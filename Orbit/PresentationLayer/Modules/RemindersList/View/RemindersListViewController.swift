@@ -26,23 +26,37 @@ class RemindersListViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(ReminderCell.self,
-                           forCellReuseIdentifier: Constants.ReminderCell.identifier)
+                           forCellReuseIdentifier: Constants.Cell.reminderCellIdentifier)
     }
     
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(searchAction))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks,
+                                                            target: self,
+                                                            action: #selector(openArchive))
     }
     
     // MARK: Actions
     
     @objc private func searchAction() {
-        AlertManager.makeNewReminderAlert(on: self) { title, desc, date in
+        AlertManager.makeNewReminderAlert(on: self) { title, desc, date, endDate in
             self.remindersListViewModel.saveRemidner(title: title,
                                                      desc: desc,
-                                                     date: date)
+                                                     date: date,
+                                                     endDate: endDate)
         }
+    }
+    
+    @objc private func openArchive() {
+        let archiveController = ArchiveRemindersListViewController()
+        navigationController?.pushViewController(archiveController, animated: true)
+    }
+    
+    private func showDetails(for reminder: Reminders) {
+        let detailsReminderController = DetailsReminderViewController(reminder: reminder)
+        navigationController?.pushViewController(detailsReminderController, animated: true)
     }
     
     // MARK: SetupBindings
@@ -53,6 +67,10 @@ class RemindersListViewController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+        }
+        
+        remindersListViewModel.onShowDetails = { [weak self] reminder in
+            self?.showDetails(for: reminder)
         }
     }
 }

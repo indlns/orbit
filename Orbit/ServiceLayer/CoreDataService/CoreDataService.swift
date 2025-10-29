@@ -37,16 +37,23 @@ class CoreDataService {
     
     // MARK: - Actions
     
-    func saveReminder(title: String, desc: String, date: Date) {
+    func saveReminder(title: String, desc: String, date: Date, endDate: Date) {
         let reminder = Reminders(context: context)
         reminder.title = title
         reminder.desc = desc
-        reminder.date = date
+        reminder.createdDate = date
+        reminder.endDate = endDate
         saveContext()
     }
     
     func deleteReminder(reminder: Reminders) {
         context.delete(reminder)
+        saveContext()
+    }
+    
+    func makeCompleted(reminder: Reminders) {
+        reminder.endDate = .now
+        reminder.isDone.toggle()
         saveContext()
     }
 }
